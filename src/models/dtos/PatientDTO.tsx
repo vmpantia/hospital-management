@@ -1,5 +1,4 @@
 export interface PatientDTO {
-    //Patient Details
     internalID:string;
     patientID:string;
     firstName:string;

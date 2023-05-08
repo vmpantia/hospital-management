@@ -1,0 +1,41 @@
+import { PatientDTO } from "../models/dtos/PatientDTO";
+import { v4 as uuidv4 } from 'uuid';
+
+export const PatientDTO_Stub : PatientDTO[] = [ 
+    {
+        internalID: uuidv4(),
+        patientID: "1",
+        firstName: "Vincent",
+        lastName: "Pantia",
+        middleName: "Marino",
+        gender: "Male",
+        civilStatus: "Single",
+        birthDate: new Date,
+        contactNo: "09090957142",
+        address: "Quezon City",
+        type: 0,
+        typeDescription: "In-Patient",
+        status: 0,
+        statusDescription: "Enabled",
+        createdDate: new Date,
+        modifiedDate: new Date,
+    },
+    {
+        internalID: uuidv4(),
+        patientID: "2",
+        firstName: "Vincent",
+        lastName: "Pantia",
+        middleName: "Marino",
+        gender: "Male",
+        civilStatus: "Single",
+        birthDate: new Date,
+        contactNo: "09090957142",
+        address: "Quezon City",
+        type: 0,
+        typeDescription: "In-Patient",
+        status: 0,
+        statusDescription: "Enabled",
+        createdDate: new Date,
+        modifiedDate: new Date,
+    },
+]

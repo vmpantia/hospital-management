@@ -3,10 +3,10 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
-import { stubPatientDTO } from "../stubs/stubPatientDTO";
+import { PatientDTO_Stub } from "../stubs/PatientDTO_Stub";
 
 const Patient = () => {
-    const [patientList, setPatientList] = useState(stubPatientDTO as PatientDTO[])
+    const [patientList, setPatientList] = useState(PatientDTO_Stub as PatientDTO[])
 
     return (
         <>
