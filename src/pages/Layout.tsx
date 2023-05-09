@@ -6,10 +6,7 @@ const Layout = () => {
         <div>
             <div className="flex">
                 <Sidebar />
-                <main className="flex-1 ml-60 bg-white">
-                    <div className="h-14 bg-zinc-100 border-b shadow-sm">
-                        header
-                    </div>
+                <main className="flex-1 h-screen ml-60 p-5 bg-gray-200">
                     <Outlet />
                 </main>
             </div>
