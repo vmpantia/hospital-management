@@ -4,14 +4,15 @@ import Sidebar from "../components/Sidebar";
 const Layout = () => {
     return (
         <div>
-            <section className='main-header'>
-            </section>
-            <section className='main-content'>
+            <div className="flex">
                 <Sidebar />
-                <div className="main-page">
+                <main className="flex-1 ml-60">
+                    <div className="h-14 bg-amber-400">
+                        header
+                    </div>
                     <Outlet />
-                </div>
-            </section>
+                </main>
+            </div>
         </div>
     );
 }
