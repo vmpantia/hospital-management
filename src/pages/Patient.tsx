@@ -29,7 +29,7 @@ const Patient = () => {
                         <Button text="Add Patient" type="primary" icon="plus" />
                     </section>
                     <section>
-                        <Button text="Advanced Filter" type="secondary" icon="filter" />
+                        <Button text="Advanced Filter" type="info" icon="filter" />
                     </section>
                 </div>
 
