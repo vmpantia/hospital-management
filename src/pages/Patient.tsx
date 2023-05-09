@@ -4,17 +4,18 @@ import { format } from "date-fns";
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
 import { PatientDTO_Stub } from "../stubs/PatientDTO_Stub";
+import { CivilStatus, Gender } from "../models/Constants";
 
 //Components
 import Title from "../components/Title";
-import StatusBadge from "../components/StatusBadge";
-import TypeBadge from "../components/TypeBadge";
+import StatusBadge from "../components/Badges/StatusBadge";
+import TypeBadge from "../components/Badges/TypeBadge";
 
 //Icons
-import { AdjustmentsVerticalIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
-import Button from "../components/Button";
-import IconButton from "../components/IconButton";
-import TextBox from "../components/TextBox";
+import Button from "../components/Buttons/Button";
+import IconButton from "../components/Buttons/IconButton";
+import TextBox from "../components/Inputs/TextBox";
+import ComboBox from "../components/Inputs/ComboBox";
 
 
 const Patient = () => {
@@ -104,7 +105,8 @@ const Patient = () => {
                                 <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} required />
                                 <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} />
                                 <TextBox name="lastName" label="LAST NAME" value={patient.lastName} required />
-                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} required />
+                                <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} required />
+                                <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} required />
                             </div>
                         </div>
                         

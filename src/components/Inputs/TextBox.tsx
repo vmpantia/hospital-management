@@ -1,4 +1,3 @@
-import React from 'react'
 type Props = {
     name:string;
     label:string;
@@ -10,7 +9,7 @@ type Props = {
 const TextBox = (props:Props) => {
     const{name, label, value, disabled, required} = props;
     return (
-        <div className=''>
+        <div>
             <label className="w-full font-medium text-xs" htmlFor={name}>
                 {required && 
                     <span className="text-red-600 font-bold mr-1">*</span>
@@ -26,4 +25,4 @@ const TextBox = (props:Props) => {
     );
 }
 
-export default TextBox
+export default TextBox;

@@ -1,5 +1,5 @@
 import { BuildingOfficeIcon, UsersIcon } from '@heroicons/react/24/solid'
-import SidebarButton from './SidebarButton';
+import SidebarButton from './Buttons/SidebarButton';
 
 const Sidebar = () => {
 

@@ -8,7 +8,7 @@ export const PatientDTO_Stub : PatientDTO[] = [
         firstName: "Vincent",
         lastName: "Pantia",
         middleName: "Marino",
-        gender: "Male",
+        gender: "Female",
         civilStatus: "Single",
         birthDate: new Date,
         contactNo: "09090957142",
