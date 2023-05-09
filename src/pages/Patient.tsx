@@ -12,6 +12,7 @@ import TypeBadge from "../components/TypeBadge";
 
 //Icons
 import { AdjustmentsVerticalIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
+import Button from "../components/Button";
 
 
 const Patient = () => {
@@ -25,22 +26,13 @@ const Patient = () => {
             <div className="bg-white p-3 rounded w-full">
                 <div className="mb-3 flex justify-between">
                     <section>
-                        <button className="text-sm bg-slate-700 hover:bg-slate-600 text-white font-medium px-3 py-1.5 flex rounded">
-                            <PlusIcon className="h-5 w-5 mr-2" />
-                            Add Patient
-                        </button>
+                        <Button text="Add Patient" type="primary" icon="plus" />
                     </section>
                     <section className="flex">
                         <p className="mr-2 mt-0.5 font-medium">Search:</p>
                         <input className="mr-2 px-2 border border-slate-500 rounded focus:outline-1" type="text"></input>
-                        <button className="text-sm bg-slate-700 hover:bg-slate-600 text-white font-medium px-3 py-1.5 mr-2 flex rounded">
-                            <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
-                            Search
-                        </button>
-                        <button className="text-sm bg-slate-700 hover:bg-slate-600 text-white font-medium px-3 py-1.5 flex rounded">
-                            <AdjustmentsVerticalIcon className="h-5 w-5 mr-2" />
-                            Filter
-                        </button>
+                        <Button text="Search" type="secondary" icon="search" /> &nbsp;
+                        <Button text="Filter" type="primary" icon="filter" />
                     </section>
                 </div>
 
