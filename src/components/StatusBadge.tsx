@@ -7,13 +7,13 @@ const StatusBadge = (props:Props) => {
     let style = "px-1.5 py-0.5 text-[11px] text-white rounded ";
     switch(value){
         case 0:
-            style += "bg-green-500";
+            style += "bg-emerald-600";
             break;
         case 1:
-            style += "bg-red-500";
+            style += "bg-red-600";
             break;
         default:
-            style += "bg-gray-500";
+            style += "bg-slate-600";
             break;
     }            
     return (

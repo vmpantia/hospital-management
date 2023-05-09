@@ -23,21 +23,18 @@ const Patient = () => {
             <Title value="Patient" 
                 description="In this page you can see all the patients stored in the system." />
 
-            <div className="bg-white p-3 rounded w-full">
+            <div className="bg-white p-5 rounded w-full">
                 <div className="mb-3 flex justify-between">
                     <section>
                         <Button text="Add Patient" type="primary" icon="plus" />
                     </section>
-                    <section className="flex">
-                        <p className="mr-2 mt-0.5 font-medium">Search:</p>
-                        <input className="mr-2 px-2 border border-slate-500 rounded focus:outline-1" type="text"></input>
-                        <Button text="Search" type="secondary" icon="search" /> &nbsp;
-                        <Button text="Filter" type="primary" icon="filter" />
+                    <section>
+                        <Button text="Advanced Filter" type="secondary" icon="filter" />
                     </section>
                 </div>
 
-                <table className="w-full">
-                    <thead className="text-xs text-center">
+                <table className="w-full text-xs text-center">
+                    <thead>
                         <tr className="border-b">
                             <th className="p-2"><input type="checkbox"></input></th>
                             <th className="p-2">Patient ID</th>
@@ -51,7 +48,7 @@ const Patient = () => {
                             <th className="p-2">Action</th>
                         </tr>
                     </thead>
-                    <tbody className="text-sm text-center">
+                    <tbody>
                         {patientList.map(data => {
                             return (
                                 <tr className="border-b" key={data.internalID}>

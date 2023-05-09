@@ -7,10 +7,10 @@ const TypeBadge = (props:Props) => {
     let style = "px-1.5 py-0.5 text-[11px] text-white rounded ";
     switch(value){
         case 0:
-            style += "bg-blue-500";
+            style += "bg-blue-600";
             break;
         case 1:
-            style += "bg-gray-500";
+            style += "bg-slate-600";
             break;
     }            
     return (
