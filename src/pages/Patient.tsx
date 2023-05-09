@@ -63,12 +63,12 @@ const Patient = () => {
                                     <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">{format(data.modifiedDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">
-                                        <IconButton text="Edit" type="primary" icon="edit" />&nbsp;&nbsp;
-                                        <IconButton text="View" type="dark" icon="view" />&nbsp;&nbsp;
+                                        <IconButton text="Edit" type="warning" icon="edit" />&nbsp;&nbsp;
+                                        <IconButton text="View" type="secondary" icon="view" />&nbsp;&nbsp;
                                         {data.status === 0 ?
                                         <IconButton text="Disable" type="danger" icon="disable" /> : 
                                         <IconButton text="Enable" type="success" icon="enable" />}&nbsp;&nbsp;  
-                                        <IconButton text="Delete" type="secondary" icon="delete" />
+                                        <IconButton text="Delete" type="dark" icon="delete" />
                                     </td>
                                 </tr>
                             );
