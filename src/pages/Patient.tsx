@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { PatientDTO } from "../models/dtos/PatientDTO";
 import { PatientDTO_Stub } from "../stubs/PatientDTO_Stub";
 import Title from "../components/Title";
+import StatusBadge from "../components/StatusBadge";
+import TypeBadge from "../components/TypeBadge";
 
 
 const Patient = () => {
@@ -17,34 +19,34 @@ const Patient = () => {
 
             <div className="bg-white inline-flex p-3 rounded w-full">
                 <table className="w-full">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox"></input></th>
-                            <th>Patient ID</th>
-                            <th>Name</th>
-                            <th>Contact No.</th>
-                            <th>Address</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Created Date</th>
-                            <th>Modified Date</th>
-                            <th>Action</th>
+                    <thead className="text-xs text-center">
+                        <tr className="border-b">
+                            <th className="p-2"><input type="checkbox"></input></th>
+                            <th className="p-2">Patient ID</th>
+                            <th className="p-2">Name</th>
+                            <th className="p-2">Contact No.</th>
+                            <th className="p-2">Address</th>
+                            <th className="p-2">Type</th>
+                            <th className="p-2">Status</th>
+                            <th className="p-2">Created Date</th>
+                            <th className="p-2">Modified Date</th>
+                            <th className="p-2">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-sm text-center">
                         {patientList.map(data => {
                             return (
-                                <tr key={data.internalID}>
-                                    <td>{<input type="checkbox"></input>}</td>
-                                    <td>{data.patientID}</td>
-                                    <td>{`${data.lastName}, ${data.firstName}`}</td>
-                                    <td>{data.contactNo}</td>
-                                    <td>{data.address}</td>
-                                    <td>{data.typeDescription}</td>
-                                    <td>{data.statusDescription}</td>
-                                    <td>{format(data.createdDate, "yyyy-MM-dd")}</td>
-                                    <td>{format(data.modifiedDate, "yyyy-MM-dd")}</td>
-                                    <td>
+                                <tr className="border-b" key={data.internalID}>
+                                    <td className="p-2">{<input type="checkbox"></input>}</td>
+                                    <td className="p-2 font-medium">{data.patientID}</td>
+                                    <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
+                                    <td className="p-2">{data.contactNo}</td>
+                                    <td className="p-2">{data.address}</td>
+                                    <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
+                                    <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
+                                    <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
+                                    <td className="p-2">{format(data.modifiedDate, "yyyy-MM-dd")}</td>
+                                    <td className="p-2">
                                         <button>Edit</button>
                                         <button>View</button>
                                         <button>Enable</button>
