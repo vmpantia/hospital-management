@@ -14,6 +14,7 @@ import TypeBadge from "../components/TypeBadge";
 import { AdjustmentsVerticalIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Button from "../components/Button";
 import IconButton from "../components/IconButton";
+import TextBox from "../components/TextBox";
 
 
 const Patient = () => {
@@ -94,19 +95,19 @@ const Patient = () => {
                     aria-labelledby="modal-title" 
                     role="dialog" 
                     aria-modal="true">
-                    <div className="bg-white m-auto mt-5 p-4 border rounded w-4/5">
+                    <div className="bg-white m-auto mt-5 p-4 border rounded w-3/5">
                         <div className="border-b pb-4">
                             header
                         </div>
                         <div className="p-4">
-                            <div>
-                                <label className="w-full font-medium text-xs" htmlFor="firstName">
-                                    <span className="text-red-600 font-bold mr-1">*</span>
-                                    FIRST NAME:
-                                </label>
-                                <input className="w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1" name="firstName" type="text"></input>
+                            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
+                                <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} required />
+                                <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} />
+                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} required />
+                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} required />
                             </div>
                         </div>
+                        
                         <div className="flex justify-end border-t pt-4">
                             <Button text="Save" type="primary" icon="plus" onClickedHandler={closeBtnClicked} /> &nbsp;&nbsp;
                             <Button text="Close" type="secondary" icon="filter" onClickedHandler={closeBtnClicked} />
