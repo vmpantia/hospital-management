@@ -51,7 +51,7 @@ const Patient = () => {
                     <tbody>
                         {patientList.map(data => {
                             return (
-                                <tr className="border-b" key={data.internalID}>
+                                <tr className="border-b odd:bg-white even:bg-gray-100" key={data.internalID}>
                                     <td className="p-2">{<input type="checkbox"></input>}</td>
                                     <td className="p-2 font-medium">{data.patientID}</td>
                                     <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
