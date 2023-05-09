@@ -13,6 +13,7 @@ import TypeBadge from "../components/TypeBadge";
 //Icons
 import { AdjustmentsVerticalIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Button from "../components/Button";
+import IconButton from "../components/IconButton";
 
 
 const Patient = () => {
@@ -62,11 +63,12 @@ const Patient = () => {
                                     <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">{format(data.modifiedDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">
-                                        <button>Edit</button>
-                                        <button>View</button>
-                                        <button>Enable</button>
-                                        <button>Disable</button>
-                                        <button>Delete</button>
+                                        <IconButton text="Edit" type="primary" icon="edit" />&nbsp;&nbsp;
+                                        <IconButton text="View" type="dark" icon="view" />&nbsp;&nbsp;
+                                        {data.status === 0 ?
+                                        <IconButton text="Disable" type="danger" icon="disable" /> : 
+                                        <IconButton text="Enable" type="success" icon="enable" />}&nbsp;&nbsp;  
+                                        <IconButton text="Delete" type="secondary" icon="delete" />
                                     </td>
                                 </tr>
                             );
