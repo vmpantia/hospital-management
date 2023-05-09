@@ -7,7 +7,7 @@ type Props = {
 const Title = (props:Props) => {
     const {value, description} = props;
   return (
-    <div className="bg-white inline-flex px-5 py-3 mb-3 rounded w-full">
+    <div className="inline-flex mb-5 rounded w-full">
         {{  "Patient" : <UserGroupIcon className="h-7 w-7 mr-3 mt-2" />,
             "Doctor" : <UserGroupIcon className="h-7 w-7 mr-3 mt-2" />,
             "Nurse" : <UserGroupIcon  className="h-7 w-7 mr-3 mt-2" />,

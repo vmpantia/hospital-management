@@ -17,23 +17,35 @@ import IconButton from "../components/IconButton";
 
 
 const Patient = () => {
-    const [patientList, setPatientList] = useState(PatientDTO_Stub as PatientDTO[])
+    const [patientList, setPatientList] = useState(PatientDTO_Stub as PatientDTO[]);
+    const [patient, setPatient] = useState({} as PatientDTO);
+    const [modalShow, setModalShow] = useState(false);
+
+    const addBtnClicked = () => {
+        setModalShow(true);
+        setPatient({} as PatientDTO);
+    }
+
+    const editBtnClicked = (data:PatientDTO) => {
+        setModalShow(true);
+        setPatient(data);
+    }
+
+    const closeBtnClicked = () => {
+        setModalShow(false);
+        setPatient({} as PatientDTO);
+    }
 
     return (
         <>
             <Title value="Patient" 
                 description="In this page you can see all the patients stored in the system." />
-
-            <div className="bg-white p-5 rounded w-full">
+            
+            <div className="p-5 w-full border rounded bg-white">
                 <div className="mb-3 flex justify-between">
-                    <section>
-                        <Button text="Add Patient" type="primary" icon="plus" />
-                    </section>
-                    <section>
-                        <Button text="Advanced Filter" type="info" icon="filter" />
-                    </section>
+                    <Button text="Add Patient" type="primary" icon="plus" onClickedHandler={addBtnClicked} />
+                    <Button text="Advanced Filter" type="info" icon="filter" onClickedHandler={addBtnClicked} />
                 </div>
-
                 <table className="w-full text-xs text-center">
                     <thead>
                         <tr className="border-b">
@@ -63,12 +75,12 @@ const Patient = () => {
                                     <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">{format(data.modifiedDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">
-                                        <IconButton text="Edit" type="warning" icon="edit" />&nbsp;&nbsp;
-                                        <IconButton text="View" type="secondary" icon="view" />&nbsp;&nbsp;
+                                        <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
+                                        <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
                                         {data.status === 0 ?
-                                        <IconButton text="Disable" type="danger" icon="disable" /> : 
-                                        <IconButton text="Enable" type="success" icon="enable" />}&nbsp;&nbsp;  
-                                        <IconButton text="Delete" type="dark" icon="delete" />
+                                        <IconButton text="Disable" type="danger" icon="disable" onClickedHandler={() => editBtnClicked(data)} /> : 
+                                        <IconButton text="Enable" type="success" icon="enable" onClickedHandler={() => editBtnClicked(data)} />}&nbsp;&nbsp;  
+                                        <IconButton text="Delete" type="dark" icon="delete" onClickedHandler={() => editBtnClicked(data)} />
                                     </td>
                                 </tr>
                             );
@@ -77,6 +89,31 @@ const Patient = () => {
                 </table>
             </div>
             
+            {modalShow &&
+                <div className="fixed z-10 p-4 left-0 top-0 w-full h-full overflow-auto bg-gray-900 bg-opacity-50" 
+                    aria-labelledby="modal-title" 
+                    role="dialog" 
+                    aria-modal="true">
+                    <div className="bg-white m-auto mt-5 p-4 border rounded w-4/5">
+                        <div className="border-b pb-4">
+                            header
+                        </div>
+                        <div className="p-4">
+                            <div>
+                                <label className="w-full font-medium text-xs" htmlFor="firstName">
+                                    <span className="text-red-600 font-bold mr-1">*</span>
+                                    FIRST NAME:
+                                </label>
+                                <input className="w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1" name="firstName" type="text"></input>
+                            </div>
+                        </div>
+                        <div className="flex justify-end border-t pt-4">
+                            <Button text="Save" type="primary" icon="plus" onClickedHandler={closeBtnClicked} /> &nbsp;&nbsp;
+                            <Button text="Close" type="secondary" icon="filter" onClickedHandler={closeBtnClicked} />
+                        </div>
+                    </div>
+                </div>
+            }
         </>
     );
 }

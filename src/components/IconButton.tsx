@@ -5,9 +5,10 @@ type Props = {
     type:string;
     icon:string;
     disabled?:boolean;
+    onClickedHandler: () => void;
 }
 const IconButton = (props:Props) => {
-    const {text, type, disabled, icon} = props;
+    const {text, type, disabled, icon, onClickedHandler} = props;
     let styleBtn = "p-0.5 text-xs font-medium rounded focus:outline-0 border ";
     let styleIcn = "h-4 w-4";
     switch(type) {
@@ -56,7 +57,7 @@ const IconButton = (props:Props) => {
     }
 
   return (
-    <button className={styleBtn} title={text} disabled={disabled}>
+    <button className={styleBtn} title={text} disabled={disabled} onClick={onClickedHandler}>
         {{  "plus" : <PlusIcon className={styleIcn} />,
             "search" : <MagnifyingGlassIcon className={styleIcn} />,
             "filter" : <AdjustmentsVerticalIcon className={styleIcn} />,

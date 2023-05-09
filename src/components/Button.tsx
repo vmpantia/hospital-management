@@ -5,9 +5,10 @@ type Props = {
     type:string;
     icon:string;
     disabled?:boolean;
+    onClickedHandler: () => void;
 }
 const Button = (props:Props) => {
-    const {text, type, disabled, icon} = props;
+    const {text, type, disabled, icon, onClickedHandler} = props;
 
     let styleBtn = "flex px-2.5 py-1.5 text-xs font-medium rounded focus:outline-0 ";
     let styleIcn = "h-4 w-4 mr-2";
@@ -36,7 +37,7 @@ const Button = (props:Props) => {
     }
 
     return (
-        <button className={styleBtn} disabled={disabled}>
+        <button className={styleBtn} disabled={disabled} onClick={onClickedHandler}>
             {{  "plus" : <PlusIcon className={styleIcn} />,
                 "search" : <MagnifyingGlassIcon className={styleIcn} />,
                 "filter" : <AdjustmentsVerticalIcon className={styleIcn} />
