@@ -17,4 +17,4 @@ const SidebarButton = (props:Props) => {
   )
 }
 
-export default SidebarButton
+export default SidebarButton;
