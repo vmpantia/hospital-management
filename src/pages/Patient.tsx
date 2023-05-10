@@ -40,13 +40,6 @@ const Patient = () => {
     }    
     
     const onPatientValueChange = (e:any) => {
-        if(e.target.name === "birthDate")   {
-            console.log(new Date(e.target.value));
-            setPatient(data => {
-                return {...data, [e.target.name]: [new Date(e.target.value)]}
-            });
-            return;
-        }      
         setPatient(data => {
             return {...data, [e.target.name]: [e.target.value]}
         });
@@ -115,13 +108,20 @@ const Patient = () => {
                             header
                         </div>
                         <div className="p-4">
+
+                            <p className="font-medium pb-2 mb-2 border-dashed border-b">Personal Details</p>
                             <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
                                 <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} onTextChangedHandler={(e) => onPatientValueChange(e)} required />
                                 <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} onTextChangedHandler={(e) => onPatientValueChange(e)} />
                                 <TextBox name="lastName" label="LAST NAME" value={patient.lastName} onTextChangedHandler={(e) => onPatientValueChange(e)} required />
                                 <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} onSelectChangedHandler={(e) => onPatientValueChange(e)} required />
                                 <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onSelectChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <DatePicker name="birthDate" label="BIRTHDATE" value={patient.birthDate === undefined ? "" : format(patient.birthDate, "yyyy-MM-dd")} onDateChangedHandler={(e) => onPatientValueChange(e)} required  />
+                                <DatePicker name="birthDate" label="BIRTHDATE" value={patient.birthDate} onDateChangedHandler={(e) => onPatientValueChange(e)} required  />
+                            </div>
+                            <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Contact & Address Details</p>
+                            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
+                                <TextBox name="contactNo" label="CONTACT NO" value={patient.contactNo} onTextChangedHandler={(e) => onPatientValueChange(e)} required />
+                                <TextBox name="address" label="ADDRESS" value={patient.address} onTextChangedHandler={(e) => onPatientValueChange(e)} required  />
                             </div>
                         </div>
                         
