@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
 import { PatientDTO_Stub } from "../stubs/PatientDTO_Stub";
-import { CivilStatus, Gender } from "../models/Constants";
 
 //Components
 import Title from "../components/Title";
@@ -16,6 +15,7 @@ import TypeBadge from "../components/Badges/TypeBadge";
 import Button from "../components/Buttons/Button";
 import IconButton from "../components/Buttons/IconButton";
 import InputField from "../components/Inputs/InputField";
+import Constants from "../models/Constants";
 
 const Patient = () => {
     const [patientList, setPatientList] = useState(PatientDTO_Stub as PatientDTO[]);
@@ -46,13 +46,14 @@ const Patient = () => {
             civilStatus: patient.civilStatus,
             birthDate: patient.birthDate,
             contactNo: patient.contactNo,
+            emailAddress: patient.emailAddress,
             address: patient.address,
             type: patient.type,
             typeDescription: patient.typeDescription,
-            status: isAdd ? 0 : patient.status,
-            statusDescription: isAdd ? "Enabled" : patient.statusDescription,
-            createdDate: new Date(),
-            modifiedDate: new Date()
+            status: isAdd ? Constants.STAT_ENABLED_INT : patient.status,
+            statusDescription: isAdd ? Constants.STAT_ENABLED_STRING : patient.statusDescription,
+            createdDate: isAdd ? new Date() : patient.createdDate,
+            modifiedDate: isAdd ?  undefined : new Date()
         }
 
         updatePatientList(data, isAdd);
@@ -120,7 +121,7 @@ const Patient = () => {
                                     <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
                                     <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
                                     <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
-                                    <td className="p-2">{format(data.modifiedDate, "yyyy-MM-dd")}</td>
+                                    <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
                                     <td className="p-2">
                                         <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
                                         <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
@@ -152,14 +153,20 @@ const Patient = () => {
                                     <InputField type="text" name="firstName" label="FIRST NAME" value={patient.firstName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
                                     <InputField type="text" name="middleName" label="MIDDLE NAME" value={patient.middleName} onValueChangedHandler={(e) => onPatientValueChange(e)} />
                                     <InputField type="text" name="lastName" label="LAST NAME" value={patient.lastName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                    <InputField type="select" name="gender" label="GENDER" value={patient.gender} datasource={Gender} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                    <InputField type="select" name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="select" name="gender" label="GENDER" value={patient.gender} datasource={Constants.Gender} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="select" name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={Constants.CivilStatus} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
                                     <InputField type="date" name="birthDate" label="BIRTHDATE" value={patient.birthDate} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
                                 </div>
-                                <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Contact & Address Details</p>
+
+                                <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Contact Details</p>
                                 <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
                                     <InputField type="text" name="contactNo" label="CONTACT NO" value={patient.contactNo} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                    <InputField type="text" name="address" label="ADDRESS" value={patient.address} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                                    <InputField type="email" name="emailAddress" label="EMAIL ADDRESS" value={patient.emailAddress} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                                </div>
+
+                                <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Address Details</p>
+                                <div className="grid grid-cols-1">
+                                    <InputField type="text" name="address" label="ADDRESS" value={patient.address} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
                                 </div>
                             </div>
                             

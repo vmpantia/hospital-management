@@ -8,11 +8,12 @@ export interface PatientDTO {
     civilStatus:string;
     birthDate:string;
     contactNo:string;
+    emailAddress:string;
     address:string;
     type:number;
     typeDescription:string;
     status:number;
     statusDescription:string;
     createdDate:Date;
-    modifiedDate:Date;
+    modifiedDate?:Date;
 }
