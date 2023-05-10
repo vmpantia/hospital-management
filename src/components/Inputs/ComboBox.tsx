@@ -24,9 +24,9 @@ const ComboBox = (props:Props) => {
                    value={value} 
                    disabled={disabled}
                    onChange={(e) => onSelectChangedHandler(e)}>
-                    <option value="" selected>Select</option>
+                    <option value="" key="">Select</option>
                     {datasource.map(data => (
-                        <option value={data}>{data}</option>
+                        <option value={data} key={data}>{data}</option>
                     ))}
             </select>
         </div>

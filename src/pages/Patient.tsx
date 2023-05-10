@@ -16,6 +16,7 @@ import Button from "../components/Buttons/Button";
 import IconButton from "../components/Buttons/IconButton";
 import TextBox from "../components/Inputs/TextBox";
 import ComboBox from "../components/Inputs/ComboBox";
+import DatePicker from "../components/Inputs/DatePicker";
 
 
 const Patient = () => {
@@ -38,16 +39,18 @@ const Patient = () => {
         setPatient({} as PatientDTO);
     }    
     
-    const onTextChange = (e:any) => {
+    const onPatientValueChange = (e:any) => {
+        if(e.target.name === "birthDate")   {
+            console.log(new Date(e.target.value));
+            setPatient(data => {
+                return {...data, [e.target.name]: [new Date(e.target.value)]}
+            });
+            return;
+        }      
         setPatient(data => {
             return {...data, [e.target.name]: [e.target.value]}
         });
     }    
-    const onSelectChange = (e:any) => {
-        setPatient(data => {
-            return {...data, [e.target.name]: [e.target.value]}
-        });
-    }
 
     return (
         <>
@@ -113,11 +116,12 @@ const Patient = () => {
                         </div>
                         <div className="p-4">
                             <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
-                                <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} onTextChangedHandler={(e) => onTextChange(e)} required />
-                                <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} onTextChangedHandler={(e) => onTextChange(e)} />
-                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} onTextChangedHandler={(e) => onTextChange(e)} required />
-                                <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} onSelectChangedHandler={(e) => onSelectChange(e)} required />
-                                <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onSelectChangedHandler={(e) => onSelectChange(e)} required />
+                                <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} onTextChangedHandler={(e) => onPatientValueChange(e)} required />
+                                <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} onTextChangedHandler={(e) => onPatientValueChange(e)} />
+                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} onTextChangedHandler={(e) => onPatientValueChange(e)} required />
+                                <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} onSelectChangedHandler={(e) => onPatientValueChange(e)} required />
+                                <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onSelectChangedHandler={(e) => onPatientValueChange(e)} required />
+                                <DatePicker name="birthDate" label="BIRTHDATE" value={patient.birthDate === undefined ? "" : format(patient.birthDate, "yyyy-MM-dd")} onDateChangedHandler={(e) => onPatientValueChange(e)} required  />
                             </div>
                         </div>
                         

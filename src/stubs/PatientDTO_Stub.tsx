@@ -10,7 +10,7 @@ export const PatientDTO_Stub : PatientDTO[] = [
         middleName: "Marino",
         gender: "Female",
         civilStatus: "Single",
-        birthDate: new Date,
+        birthDate: new Date("06/12/1999"),
         contactNo: "09090957142",
         address: "Quezon City",
         type: 1,
