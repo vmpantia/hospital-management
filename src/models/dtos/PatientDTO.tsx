@@ -6,7 +6,7 @@ export interface PatientDTO {
     middleName:string;
     gender:string;
     civilStatus:string;
-    birthDate:Date;
+    birthDate:string;
     contactNo:string;
     address:string;
     type:number;
