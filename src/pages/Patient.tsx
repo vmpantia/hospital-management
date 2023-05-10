@@ -36,6 +36,17 @@ const Patient = () => {
     const closeBtnClicked = () => {
         setModalShow(false);
         setPatient({} as PatientDTO);
+    }    
+    
+    const onTextChange = (e:any) => {
+        setPatient(data => {
+            return {...data, [e.target.name]: [e.target.value]}
+        });
+    }    
+    const onSelectChange = (e:any) => {
+        setPatient(data => {
+            return {...data, [e.target.name]: [e.target.value]}
+        });
     }
 
     return (
@@ -102,11 +113,11 @@ const Patient = () => {
                         </div>
                         <div className="p-4">
                             <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
-                                <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} required />
-                                <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} />
-                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} required />
-                                <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} required />
-                                <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} required />
+                                <TextBox name="firstName" label="FIRST NAME" value={patient.firstName} onTextChangedHandler={(e) => onTextChange(e)} required />
+                                <TextBox name="middleName" label="MIDDLE NAME" value={patient.middleName} onTextChangedHandler={(e) => onTextChange(e)} />
+                                <TextBox name="lastName" label="LAST NAME" value={patient.lastName} onTextChangedHandler={(e) => onTextChange(e)} required />
+                                <ComboBox name="gender" label="GENDER" value={patient.gender} datasource={Gender} onSelectChangedHandler={(e) => onSelectChange(e)} required />
+                                <ComboBox name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onSelectChangedHandler={(e) => onSelectChange(e)} required />
                             </div>
                         </div>
                         

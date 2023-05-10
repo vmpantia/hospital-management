@@ -4,10 +4,11 @@ type Props = {
     value:any;
     disabled?:boolean;
     required?:boolean;
+    onTextChangedHandler: (e:any) => void;
 }
 
 const TextBox = (props:Props) => {
-    const{name, label, value, disabled, required} = props;
+    const{name, label, value, disabled, required, onTextChangedHandler} = props;
     return (
         <div>
             <label className="w-full font-medium text-xs" htmlFor={name}>
@@ -20,7 +21,8 @@ const TextBox = (props:Props) => {
                    type="text"
                    name={name} 
                    value={value} 
-                   disabled={disabled}></input>
+                   disabled={disabled}
+                   onChange={(e) => onTextChangedHandler(e)}></input>
         </div>
     );
 }

@@ -6,10 +6,11 @@ type Props = {
     disabled?:boolean;
     required?:boolean;
     datasource:string[];
+    onSelectChangedHandler: (e:any) => void;
 }
 
 const ComboBox = (props:Props) => {
-    const{name, label, value, disabled, required, datasource} = props;
+    const{name, label, value, disabled, required, datasource, onSelectChangedHandler} = props;
     return (
         <div>
             <label className="w-full font-medium text-xs" htmlFor={name}>
@@ -21,7 +22,9 @@ const ComboBox = (props:Props) => {
             <select className="w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 disabled:bg-gray-200" 
                    name={name} 
                    value={value} 
-                   disabled={disabled}>
+                   disabled={disabled}
+                   onChange={(e) => onSelectChangedHandler(e)}>
+                    <option value="" selected>Select</option>
                     {datasource.map(data => (
                         <option value={data}>{data}</option>
                     ))}
