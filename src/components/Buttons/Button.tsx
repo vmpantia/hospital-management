@@ -2,17 +2,18 @@ import { AdjustmentsVerticalIcon, MagnifyingGlassIcon, PlusIcon } from "@heroico
 
 type Props = {
     text:string;
-    type:string;
+    type?:string;
+    color:string;
     icon:string;
     disabled?:boolean;
-    onClickedHandler: () => void;
+    onClickedHandler?: () => void;
 }
 const Button = (props:Props) => {
-    const {text, type, disabled, icon, onClickedHandler} = props;
+    const {text, type, color, disabled, icon, onClickedHandler} = props;
 
     let styleBtn = "flex px-2.5 py-1.5 text-xs font-medium rounded focus:outline-0 ";
     let styleIcn = "h-4 w-4 mr-2";
-    switch(type) {
+    switch(color) {
         case "primary":
             styleBtn += "text-white bg-blue-600 enabled:hover:bg-blue-700 focus:bg-blue-700 disabled:bg-blue-500 ";
             break;
@@ -36,15 +37,38 @@ const Button = (props:Props) => {
             break;
     }
 
-    return (
-        <button className={styleBtn} disabled={disabled} onClick={onClickedHandler}>
-            {{  "plus" : <PlusIcon className={styleIcn} />,
-                "search" : <MagnifyingGlassIcon className={styleIcn} />,
-                "filter" : <AdjustmentsVerticalIcon className={styleIcn} />
-            }[icon]}
-            {text}
-        </button>
-    );
+    switch(type) {
+        case "submit": 
+            return (
+                <button type="submit" className={styleBtn} disabled={disabled}>
+                    {{  "plus" : <PlusIcon className={styleIcn} />,
+                        "search" : <MagnifyingGlassIcon className={styleIcn} />,
+                        "filter" : <AdjustmentsVerticalIcon className={styleIcn} />
+                    }[icon]}
+                    {text}
+                </button>
+            );
+        case "reset": 
+            return (
+                <button type="reset" className={styleBtn} disabled={disabled}>
+                    {{  "plus" : <PlusIcon className={styleIcn} />,
+                        "search" : <MagnifyingGlassIcon className={styleIcn} />,
+                        "filter" : <AdjustmentsVerticalIcon className={styleIcn} />
+                    }[icon]}
+                    {text}
+                </button>
+            );
+        default:
+            return (
+                <button className={styleBtn} disabled={disabled} onClick={onClickedHandler}>
+                    {{  "plus" : <PlusIcon className={styleIcn} />,
+                        "search" : <MagnifyingGlassIcon className={styleIcn} />,
+                        "filter" : <AdjustmentsVerticalIcon className={styleIcn} />
+                    }[icon]}
+                    {text}
+                </button>
+            );
+    }
 }
 
 export default Button;

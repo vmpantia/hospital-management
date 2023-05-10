@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { v4 as uuidv4 } from 'uuid';
 
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
@@ -31,6 +32,33 @@ const Patient = () => {
         setPatient(data);
     }
 
+    const saveBtnClicked = (e:any) => {
+        e.preventDefault();
+        
+        let isAdd = patient.internalID === undefined;
+        const data:PatientDTO = {
+            internalID: isAdd ? uuidv4() : patient.internalID,
+            patientID: patient.patientID,
+            firstName: patient.firstName,
+            middleName: patient.middleName,
+            lastName: patient.lastName,
+            gender: patient.gender,
+            civilStatus: patient.civilStatus,
+            birthDate: patient.birthDate,
+            contactNo: patient.contactNo,
+            address: patient.address,
+            type: patient.type,
+            typeDescription: patient.typeDescription,
+            status: isAdd ? 0 : patient.status,
+            statusDescription: isAdd ? "Enabled" : patient.statusDescription,
+            createdDate: new Date(),
+            modifiedDate: new Date()
+        }
+
+        updatePatientList(data, isAdd);
+        setModalShow(false);
+    }
+
     const closeBtnClicked = () => {
         setModalShow(false);
         setPatient({} as PatientDTO);
@@ -42,6 +70,19 @@ const Patient = () => {
         });
     }    
 
+    const updatePatientList = (data:PatientDTO, isAdd:boolean) => {
+        if(isAdd) {
+            setPatientList([...patientList, data]);  
+            return;
+        }
+
+        let currentData = patientList.filter(x => x.internalID === data.internalID)[0];
+        let index = patientList.indexOf(currentData);
+        let tempList = [...patientList];
+        tempList[index] = data;
+        setPatientList(tempList);
+    }
+
     return (
         <>
             <Title value="Patient" 
@@ -49,8 +90,8 @@ const Patient = () => {
             
             <div className="p-5 w-full border rounded bg-white">
                 <div className="mb-3 flex justify-between">
-                    <Button text="Add Patient" type="primary" icon="plus" onClickedHandler={addBtnClicked} />
-                    <Button text="Advanced Filter" type="info" icon="filter" onClickedHandler={addBtnClicked} />
+                    <Button text="Add Patient" color="primary" icon="plus" onClickedHandler={addBtnClicked} />
+                    <Button text="Advanced Filter" color="info" icon="filter" onClickedHandler={addBtnClicked} />
                 </div>
                 <table className="w-full text-xs text-center">
                     <thead>
@@ -96,37 +137,39 @@ const Patient = () => {
             </div>
             
             {modalShow &&
-                <div className="fixed z-10 p-4 left-0 top-0 w-full h-full overflow-auto bg-gray-900 bg-opacity-50" 
-                    aria-labelledby="modal-title" 
-                    role="dialog" 
-                    aria-modal="true">
-                    <div className="bg-white m-auto mt-5 p-4 border rounded w-3/5">
-                        <div className="border-b pb-4">
-                            header
-                        </div>
-                        <div className="p-4">
-                            <p className="font-medium pb-2 mb-2 border-dashed border-b">Personal Details</p>
-                            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
-                                <InputField type="text" name="firstName" label="FIRST NAME" value={patient.firstName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <InputField type="text" name="middleName" label="MIDDLE NAME" value={patient.middleName} onValueChangedHandler={(e) => onPatientValueChange(e)} />
-                                <InputField type="text" name="lastName" label="LAST NAME" value={patient.lastName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <InputField type="select" name="gender" label="GENDER" value={patient.gender} datasource={Gender} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <InputField type="select" name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <InputField type="date" name="birthDate" label="BIRTHDATE" value={patient.birthDate} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                <form onSubmit={saveBtnClicked}>
+                    <div className="fixed z-10 p-4 left-0 top-0 w-full h-full overflow-auto bg-gray-900 bg-opacity-50" 
+                        aria-labelledby="modal-title" 
+                        role="dialog" 
+                        aria-modal="true">
+                        <div className="bg-white m-auto mt-5 p-4 border rounded w-3/5">
+                            <div className="border-b pb-4">
+                                header
                             </div>
-                            <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Contact & Address Details</p>
-                            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
-                                <InputField type="text" name="contactNo" label="CONTACT NO" value={patient.contactNo} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
-                                <InputField type="text" name="address" label="ADDRESS" value={patient.address} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                            <div className="p-4">
+                                <p className="font-medium pb-2 mb-2 border-dashed border-b">Personal Details</p>
+                                <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
+                                    <InputField type="text" name="firstName" label="FIRST NAME" value={patient.firstName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="text" name="middleName" label="MIDDLE NAME" value={patient.middleName} onValueChangedHandler={(e) => onPatientValueChange(e)} />
+                                    <InputField type="text" name="lastName" label="LAST NAME" value={patient.lastName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="select" name="gender" label="GENDER" value={patient.gender} datasource={Gender} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="select" name="civilStatus" label="CIVIL STATUS" value={patient.civilStatus} datasource={CivilStatus} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="date" name="birthDate" label="BIRTHDATE" value={patient.birthDate} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                                </div>
+                                <p className="font-medium pb-2 mb-2 mt-4 border-dashed border-b">Contact & Address Details</p>
+                                <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
+                                    <InputField type="text" name="contactNo" label="CONTACT NO" value={patient.contactNo} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
+                                    <InputField type="text" name="address" label="ADDRESS" value={patient.address} onValueChangedHandler={(e) => onPatientValueChange(e)} required  />
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div className="flex justify-end border-t pt-4">
-                            <Button text="Save" type="primary" icon="plus" onClickedHandler={closeBtnClicked} /> &nbsp;&nbsp;
-                            <Button text="Close" type="secondary" icon="filter" onClickedHandler={closeBtnClicked} />
+                            
+                            <div className="flex justify-end border-t pt-4">
+                                <Button text="Save" color="primary" icon="plus" type="submit"/> &nbsp;&nbsp;
+                                <Button text="Close" color="secondary" icon="filter" onClickedHandler={closeBtnClicked} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             }
         </>
     );

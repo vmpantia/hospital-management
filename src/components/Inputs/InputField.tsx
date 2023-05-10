@@ -15,7 +15,7 @@ const InputField = (props:Props) => {
     let normalStyle = "w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 disabled:bg-gray-200";
     let errorStyle =  "w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 border-red-600 focus:outline-none focus:ring-red-300 focus:ring-1"
 
-    const{type, name, label, value, disabled, required, datasource, onValueChangedHandler} = props;
+    const {type, name, label, value, disabled, required, datasource, onValueChangedHandler} = props;
     const [errorMessage, setErrorMessage] = useState("");
     const [inputStyle, setInputStyle] = useState(normalStyle);
 
