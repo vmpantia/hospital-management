@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 type Props = {
     type:string;
     name:string;
@@ -10,7 +12,24 @@ type Props = {
 }
 
 const InputField = (props:Props) => {
+    let normalStyle = "w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 disabled:bg-gray-200";
+    let errorStyle = "w-full px-2 py-1 mt-1 text-sm border border-red-600 rounded bg-gray-50 "
+
     const{type, name, label, value, disabled, required, datasource, onValueChangedHandler} = props;
+    const [errorMessage, setErrorMessage] = useState("");
+    const [inputStyle, setInputStyle] = useState(normalStyle);
+
+    const ValidateField = (e:any) => {
+        if(required && (e.target.value === "" || e.target.value === undefined)) {
+            setErrorMessage(`The ${label.toLocaleLowerCase()} field is required.`); 
+            setInputStyle(errorStyle);
+        }
+        else  {
+            setErrorMessage(""); 
+            setInputStyle(normalStyle);
+        }
+    }
+
     return (
         <div>
             <label className="w-full font-medium text-xs" htmlFor={name}>
@@ -20,10 +39,11 @@ const InputField = (props:Props) => {
                 {label}:
             </label>
             {type === "select" ?
-                <select className="w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 disabled:bg-gray-200" 
+                <select className={inputStyle} 
                         name={name} 
                         value={value} 
                         disabled={disabled}
+                        onClick={(e) => ValidateField(e)}
                         onChange={(e) => onValueChangedHandler(e)}>
                             <option value="" key="">Select</option>
                             {datasource?.map(data => (
@@ -31,13 +51,17 @@ const InputField = (props:Props) => {
                             ))}
                 </select>
                 :
-                <input className="w-full px-2 py-1 mt-1 text-sm border rounded bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 disabled:bg-gray-200" 
+                <input className={inputStyle} 
                         type={type}
                         name={name} 
                         value={value} 
                         disabled={disabled}
+                        onKeyDown={(e) => ValidateField(e)}
                         onChange={(e) => onValueChangedHandler(e)}>
                 </input>    
+            }
+            { errorMessage !== "" &&
+                <p className="text-red-600 text-xs float-right mt-1 font-medium">{errorMessage}</p>
             }
         </div>
     );
