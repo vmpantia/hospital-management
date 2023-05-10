@@ -105,7 +105,6 @@ const Patient = () => {
                             header
                         </div>
                         <div className="p-4">
-
                             <p className="font-medium pb-2 mb-2 border-dashed border-b">Personal Details</p>
                             <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
                                 <InputField type="text" name="firstName" label="FIRST NAME" value={patient.firstName} onValueChangedHandler={(e) => onPatientValueChange(e)} required />
