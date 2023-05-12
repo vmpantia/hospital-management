@@ -28,9 +28,13 @@ const Patient = () => {
             fetchData();
             setShowLoading(false);
         }, 500);
-    })
+    }, [])
 
     const fetchData = async () => {
+        await fetch('https://localhost:7254/api/Patient/GetPatients')
+                .then(response => console.log(response.json))
+                .then(data => console.log(data))
+                .catch((err) => console.log(err.message));
         setPatientList([] as PatientDTO[]);
     }
 
