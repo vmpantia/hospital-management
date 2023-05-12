@@ -12,12 +12,12 @@ namespace HM.Api.Controllers
         public readonly IPatientService _patient;
         public PatientController(IPatientService patient) => _patient = patient;
 
-        [HttpGet]
+        [HttpGet("GetPatients")]
         public async Task<IActionResult> GetPatientsAsync()
         {
             try
             {
-                var result = _patient.GetPatientsAsync();
+                var result = await _patient.GetPatientsAsync();
                 return Ok(result);
             }
             catch(Exception ex)

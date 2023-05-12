@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
-import { PatientDTO_Stub } from "../stubs/PatientDTO_Stub";
 
 //Components
 import Title from "../components/Title";
@@ -32,8 +31,7 @@ const Patient = () => {
     })
 
     const fetchData = async () => {
-        console.log("tae");
-        setPatientList(PatientDTO_Stub);
+        setPatientList([] as PatientDTO[]);
     }
 
     const addBtnClicked = () => {
@@ -125,33 +123,38 @@ const Patient = () => {
                     </thead>
                     <tbody>
                         {showLoading ? 
-                            <tr>
-                                <td className="p-5" colSpan={10}><Loader /></td>
-                            </tr>
-                             :
-                            patientList.map(data => {
-                                return (
-                                    <tr className="border-b odd:bg-white even:bg-gray-100" key={data.internalID}>
-                                        <td className="p-2">{<input type="checkbox"></input>}</td>
-                                        <td className="p-2 font-medium">{data.patientID}</td>
-                                        <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
-                                        <td className="p-2">{data.contactNo}</td>
-                                        <td className="p-2">{data.address}</td>
-                                        <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
-                                        <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
-                                        <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
-                                        <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
-                                        <td className="p-2">
-                                            <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
-                                            <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
-                                            {data.status === 0 ?
-                                            <IconButton text="Disable" type="danger" icon="disable" onClickedHandler={() => editBtnClicked(data)} /> : 
-                                            <IconButton text="Enable" type="success" icon="enable" onClickedHandler={() => editBtnClicked(data)} />}&nbsp;&nbsp;  
-                                            <IconButton text="Delete" type="dark" icon="delete" onClickedHandler={() => editBtnClicked(data)} />
-                                        </td>
+                                <tr>
+                                    <td className="p-5" colSpan={10}><Loader /></td>
+                                </tr>
+                            :
+                                patientList.length === 0 ? 
+                                    <tr>
+                                        <td className="p-5" colSpan={10}>No Record Found in the System</td>
                                     </tr>
-                                );
-                            })
+                                :
+                                    patientList.map(data => {
+                                        return (
+                                            <tr className="border-b odd:bg-white even:bg-gray-100" key={data.internalID}>
+                                                <td className="p-2">{<input type="checkbox"></input>}</td>
+                                                <td className="p-2 font-medium">{data.patientID}</td>
+                                                <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
+                                                <td className="p-2">{data.contactNo}</td>
+                                                <td className="p-2">{data.address}</td>
+                                                <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
+                                                <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
+                                                <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
+                                                <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
+                                                <td className="p-2">
+                                                    <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
+                                                    <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
+                                                    {data.status === 0 ?
+                                                    <IconButton text="Disable" type="danger" icon="disable" onClickedHandler={() => editBtnClicked(data)} /> : 
+                                                    <IconButton text="Enable" type="success" icon="enable" onClickedHandler={() => editBtnClicked(data)} />}&nbsp;&nbsp;  
+                                                    <IconButton text="Delete" type="dark" icon="delete" onClickedHandler={() => editBtnClicked(data)} />
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                         }
                     </tbody>
                 </table>
