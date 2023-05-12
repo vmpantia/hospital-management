@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,11 +16,25 @@ import Button from "../components/Buttons/Button";
 import IconButton from "../components/Buttons/IconButton";
 import InputField from "../components/Inputs/InputField";
 import Constants from "../models/Constants";
+import Loader from "../components/Loader";
 
 const Patient = () => {
-    const [patientList, setPatientList] = useState(PatientDTO_Stub as PatientDTO[]);
+    const [patientList, setPatientList] = useState([] as PatientDTO[]);
     const [patient, setPatient] = useState({} as PatientDTO);
     const [modalShow, setModalShow] = useState(false);
+    const [showLoading, setShowLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            fetchData();
+            setShowLoading(false);
+        }, 500);
+    },[])
+
+    const fetchData = async () => {
+        console.log("tae");
+        setPatientList(PatientDTO_Stub);
+    }
 
     const addBtnClicked = () => {
         setModalShow(true);
@@ -83,12 +97,13 @@ const Patient = () => {
         tempList[index] = data;
         setPatientList(tempList);
     }
+        
 
     return (
         <>
             <Title value="Patient" 
                 description="In this page you can see all the patients stored in the system." />
-            
+
             <div className="p-5 w-full border rounded bg-white">
                 <div className="mb-3 flex justify-between">
                     <Button text="Add Patient" color="primary" icon="plus" onClickedHandler={addBtnClicked} />
@@ -110,29 +125,35 @@ const Patient = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {patientList.map(data => {
-                            return (
-                                <tr className="border-b odd:bg-white even:bg-gray-100" key={data.internalID}>
-                                    <td className="p-2">{<input type="checkbox"></input>}</td>
-                                    <td className="p-2 font-medium">{data.patientID}</td>
-                                    <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
-                                    <td className="p-2">{data.contactNo}</td>
-                                    <td className="p-2">{data.address}</td>
-                                    <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
-                                    <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
-                                    <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
-                                    <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
-                                    <td className="p-2">
-                                        <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
-                                        <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
-                                        {data.status === 0 ?
-                                        <IconButton text="Disable" type="danger" icon="disable" onClickedHandler={() => editBtnClicked(data)} /> : 
-                                        <IconButton text="Enable" type="success" icon="enable" onClickedHandler={() => editBtnClicked(data)} />}&nbsp;&nbsp;  
-                                        <IconButton text="Delete" type="dark" icon="delete" onClickedHandler={() => editBtnClicked(data)} />
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                        {showLoading ? 
+                            <tr>
+                                <td className="p-5" colSpan={10}><Loader /></td>
+                            </tr>
+                             :
+                            patientList.map(data => {
+                                return (
+                                    <tr className="border-b odd:bg-white even:bg-gray-100" key={data.internalID}>
+                                        <td className="p-2">{<input type="checkbox"></input>}</td>
+                                        <td className="p-2 font-medium">{data.patientID}</td>
+                                        <td className="p-2">{`${data.lastName}, ${data.firstName}`}</td>
+                                        <td className="p-2">{data.contactNo}</td>
+                                        <td className="p-2">{data.address}</td>
+                                        <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
+                                        <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
+                                        <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
+                                        <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
+                                        <td className="p-2">
+                                            <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
+                                            <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
+                                            {data.status === 0 ?
+                                            <IconButton text="Disable" type="danger" icon="disable" onClickedHandler={() => editBtnClicked(data)} /> : 
+                                            <IconButton text="Enable" type="success" icon="enable" onClickedHandler={() => editBtnClicked(data)} />}&nbsp;&nbsp;  
+                                            <IconButton text="Delete" type="dark" icon="delete" onClickedHandler={() => editBtnClicked(data)} />
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        }
                     </tbody>
                 </table>
             </div>
