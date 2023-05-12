@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from 'uuid';
 
+import axios from "axios";
+
 //Models
 import { PatientDTO } from "../models/dtos/PatientDTO";
 
@@ -31,19 +33,17 @@ const Patient = () => {
     }, [])
 
     const fetchData = async () => {
-        await fetch('https://localhost:7254/api/Patient/GetPatients')
+        await axios.get('https://localhost:7254/api/Patient/GetPatients')
         .then(response => {
-            response.json();
-            console.log(response.body);
-        })
-        .then(data => {
-            console.log(data);
+            if(response.status !== 200)
+                throw new Error(response.statusText)
+
+            setPatientList(response.data);
+            console.log(patientList);
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.message);
         });
-
-        setPatientList([] as PatientDTO[]);
     }
 
     const addBtnClicked = () => {
@@ -76,8 +76,8 @@ const Patient = () => {
             typeDescription: patient.typeDescription,
             status: isAdd ? Constants.STAT_ENABLED_INT : patient.status,
             statusDescription: isAdd ? Constants.STAT_ENABLED_STRING : patient.statusDescription,
-            createdDate: isAdd ? new Date() : patient.createdDate,
-            modifiedDate: isAdd ?  undefined : new Date()
+            createdDate: isAdd ? new Date().toString() : patient.createdDate,
+            modifiedDate: isAdd ?  undefined : new Date().toString()
         }
 
         updatePatientList(data, isAdd);
@@ -154,8 +154,8 @@ const Patient = () => {
                                                 <td className="p-2">{data.address}</td>
                                                 <td className="p-2"><TypeBadge value={data.type} description={data.typeDescription} /></td>
                                                 <td className="p-2"><StatusBadge value={data.status} description={data.statusDescription} /></td>
-                                                <td className="p-2">{format(data.createdDate, "yyyy-MM-dd")}</td>
-                                                <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(data.modifiedDate, "yyyy-MM-dd")}</td>
+                                                <td className="p-2">{format(new Date(data.createdDate), "yyyy-MM-dd")}</td>
+                                                <td className="p-2">{data.modifiedDate === undefined ? "N/A" : format(new Date(data.modifiedDate), "yyyy-MM-dd")}</td>
                                                 <td className="p-2">
                                                     <IconButton text="Edit" type="warning" icon="edit" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;
                                                     <IconButton text="View" type="secondary" icon="view" onClickedHandler={() => editBtnClicked(data)} />&nbsp;&nbsp;

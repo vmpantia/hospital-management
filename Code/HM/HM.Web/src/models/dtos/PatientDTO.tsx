@@ -14,6 +14,6 @@ export interface PatientDTO {
     typeDescription:string;
     status:number;
     statusDescription:string;
-    createdDate:Date;
-    modifiedDate?:Date;
+    createdDate:string;
+    modifiedDate?:string;
 }
