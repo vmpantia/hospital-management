@@ -5,16 +5,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IPatientService, PatientService>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Policy",
-        policy =>
-        {
-            policy.WithOrigins("*")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000/")
+                                .AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
 });
 
 builder.Services.AddControllers();

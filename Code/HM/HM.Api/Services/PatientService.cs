@@ -1,6 +1,6 @@
 ﻿using HM.Api.Contractors;
+using HM.Api.Data;
 using HM.Api.Models.DTO;
-using System.Collections;
 
 namespace HM.Api.Services
 {
@@ -10,7 +10,7 @@ namespace HM.Api.Services
 
         public async Task<IEnumerable<PatientDTO>> GetPatientsAsync()
         {
-            return new List<PatientDTO>();
+            return Stubs.Patients;
         }
     }
 }
