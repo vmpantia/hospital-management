@@ -1,4 +1,5 @@
 ﻿using HM.Api.Contractors;
+using HM.Api.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,5 +26,20 @@ namespace HM.Api.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpPost("SavePatient")]
+        public async Task<IActionResult> SavePatientAsync(PatientDTO data)
+        {
+            try
+            {
+                await _patient.SavePatientAsync(data);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
+
 }
