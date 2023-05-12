@@ -1,9 +1,14 @@
 using HM.Api.Contractors;
+using HM.Api.DataAccess;
 using HM.Api.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<HMDbContext>(option =>
+option.UseSqlServer(builder.Configuration.GetConnectionString("PROD")));
+
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddCors(options =>
 {

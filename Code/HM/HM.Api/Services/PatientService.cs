@@ -1,5 +1,5 @@
 ﻿using HM.Api.Contractors;
-using HM.Api.Data;
+using HM.Api.DataAccess;
 using HM.Api.Models.DTO;
 
 namespace HM.Api.Services

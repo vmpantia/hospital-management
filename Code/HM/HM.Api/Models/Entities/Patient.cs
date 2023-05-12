@@ -1,7 +1,10 @@
-﻿namespace HM.Api.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HM.Api.Models.Entities
 {
     public class Patient
     {
+        [Key]
         public Guid InternalID { get; set; }
         public string PatientID { get; set; }
         public string FirstName { get; set; }

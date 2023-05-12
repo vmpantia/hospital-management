@@ -1,6 +1,6 @@
 ﻿using HM.Api.Models.DTO;
 
-namespace HM.Api.Data
+namespace HM.Api.DataAccess
 {
     public class Stubs
     {
