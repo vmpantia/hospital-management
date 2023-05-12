@@ -29,7 +29,7 @@ const Patient = () => {
             fetchData();
             setShowLoading(false);
         }, 500);
-    },[])
+    })
 
     const fetchData = async () => {
         console.log("tae");
@@ -97,7 +97,6 @@ const Patient = () => {
         tempList[index] = data;
         setPatientList(tempList);
     }
-        
 
     return (
         <>
