@@ -28,7 +28,7 @@ namespace HM.Api.Controllers
         }
 
         [HttpPost("SavePatient")]
-        public async Task<IActionResult> SavePatientAsync(PatientDTO data)
+        public async Task<IActionResult> SavePatientAsync([FromBody]PatientDTO data)
         {
             try
             {

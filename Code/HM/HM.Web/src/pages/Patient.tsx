@@ -18,6 +18,7 @@ import IconButton from "../components/Buttons/IconButton";
 import InputField from "../components/Inputs/InputField";
 import Constants from "../models/Constants";
 import Loader from "../components/Loader";
+import { json } from "stream/consumers";
 
 const Patient = () => {
     const [patientList, setPatientList] = useState([] as PatientDTO[]);
@@ -34,16 +35,15 @@ const Patient = () => {
 
     const fetchData = async () => {
         await axios.get('https://localhost:7254/api/Patient/GetPatients')
-        .then(response => {
-            if(response.status !== 200)
-                throw new Error(response.statusText)
+                    .then(response => {
+                        if(response.status !== 200)
+                            throw new Error(response.statusText)
 
-            setPatientList(response.data);
-            console.log(patientList);
-        })
-        .catch(err => {
-            console.log(err.message);
-        });
+                        setPatientList(response.data);
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                    });
     }
 
     const addBtnClicked = () => {
@@ -56,13 +56,13 @@ const Patient = () => {
         setPatient(data);
     }
 
-    const saveBtnClicked = (e:any) => {
+    const saveBtnClicked = async (e:any) => {
         e.preventDefault();
         
         let isAdd = patient.internalID === undefined;
         const data:PatientDTO = {
             internalID: isAdd ? uuidv4() : patient.internalID,
-            patientID: patient.patientID,
+            patientID: "1",
             firstName: patient.firstName,
             middleName: patient.middleName,
             lastName: patient.lastName,
@@ -76,11 +76,28 @@ const Patient = () => {
             typeDescription: patient.typeDescription,
             status: isAdd ? Constants.STAT_ENABLED_INT : patient.status,
             statusDescription: isAdd ? Constants.STAT_ENABLED_STRING : patient.statusDescription,
-            createdDate: isAdd ? new Date().toString() : patient.createdDate,
-            modifiedDate: isAdd ?  undefined : new Date().toString()
+            createdDate: isAdd ? format(new Date(), "yyyy-MM-dd") : patient.createdDate,
+            modifiedDate: format(new Date(), "yyyy-MM-dd")
         }
+        await axios.post("https://localhost:7254/api/Patient/SavePatient", 
+                            data,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                }
+                            }
+                    )
+                    .then(response => {
+                        if(response.status !== 200)
+                            throw new Error(response.statusText)
+                        
+                        fetchData();
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                    });
 
-        updatePatientList(data, isAdd);
         setModalShow(false);
     }
 
@@ -91,22 +108,9 @@ const Patient = () => {
     
     const onPatientValueChange = (e:any) => {
         setPatient(data => {
-            return {...data, [e.target.name]: [e.target.value]}
+            return {...data, [e.target.name]: e.target.value}
         });
     }    
-
-    const updatePatientList = (data:PatientDTO, isAdd:boolean) => {
-        if(isAdd) {
-            setPatientList([...patientList, data]);  
-            return;
-        }
-
-        let currentData = patientList.filter(x => x.internalID === data.internalID)[0];
-        let index = patientList.indexOf(currentData);
-        let tempList = [...patientList];
-        tempList[index] = data;
-        setPatientList(tempList);
-    }
 
     return (
         <>
