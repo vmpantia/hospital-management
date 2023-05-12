@@ -1,6 +1,6 @@
-﻿using HM.Api.Models.DTO;
+﻿using HM.BAL.Models.DTO;
 
-namespace HM.Api.Contractors
+namespace HM.BAL.Contractors
 {
     public interface IPatientService
     {

@@ -1,6 +1,8 @@
-using HM.Api.Contractors;
-using HM.Api.DataAccess;
-using HM.Api.Services;
+using HM.BAL.Contractors;
+using HM.BAL.Services;
+using HM.DAL.Contractors;
+using HM.DAL.DataAccess;
+using HM.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddDbContext<HMDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("PROD")));
 
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Policy",

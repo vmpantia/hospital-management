@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HM.Api.Models.Entities
+﻿namespace HM.BAL.Models.DTO
 {
-    public class Patient
+    public class PatientDTO
     {
-        [Key]
         public Guid InternalID { get; set; }
         public string PatientID { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +14,9 @@ namespace HM.Api.Models.Entities
         public string EmailAddress { get; set; }
         public string Address { get; set; }
         public int Type { get; set; }
+        public string? TypeDescription { get; set; }
         public int Status { get; set; }
+        public string? StatusDescription { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
     }

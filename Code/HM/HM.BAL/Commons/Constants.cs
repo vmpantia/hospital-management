@@ -1,4 +1,4 @@
-﻿namespace HM.Api.Common
+﻿namespace HM.Api.Commons
 {
     public class Constants
     {

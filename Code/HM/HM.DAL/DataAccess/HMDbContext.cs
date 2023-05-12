@@ -1,7 +1,7 @@
-﻿using HM.Api.Models.Entities;
+﻿using HM.DAL.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HM.Api.DataAccess
+namespace HM.DAL.DataAccess
 {
     public class HMDbContext : DbContext
     {

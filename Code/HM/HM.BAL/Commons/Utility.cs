@@ -1,8 +1,7 @@
-﻿using HM.Api.Models.DTO;
-using HM.Api.Models.Entities;
-using Microsoft.VisualBasic;
+﻿using HM.BAL.Models.DTO;
+using HM.DAL.DataAccess.Entities;
 
-namespace HM.Api.Common
+namespace HM.Api.Commons
 {
     public class Utility
     {
@@ -34,7 +33,6 @@ namespace HM.Api.Common
         {
             return new Patient
             {
-
                 InternalID = dto.InternalID,
                 PatientID = dto.PatientID,
                 FirstName = dto.FirstName,

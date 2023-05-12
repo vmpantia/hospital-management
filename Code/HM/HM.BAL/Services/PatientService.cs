@@ -1,18 +1,19 @@
-﻿using HM.Api.Contractors;
-using HM.Api.DataAccess;
-using HM.Api.Models.DTO;
-using Microsoft.EntityFrameworkCore;
+﻿using HM.Api.Commons;
+using HM.BAL.Contractors;
+using HM.BAL.Models.DTO;
+using HM.DAL.Contractors;
 
-namespace HM.Api.Services
+namespace HM.BAL.Services
 {
     public class PatientService : IPatientService
     {
-        private readonly HMDbContext _db;
-        public PatientService(HMDbContext db) => _db = db;
+        private readonly IUnitOfWork _uow;
+        public PatientService(IUnitOfWork uow) => _uow = uow;
 
         public async Task<IEnumerable<PatientDTO>> GetPatientsAsync()
         {
-            return await _db.Patients.Select(data => new PatientDTO
+            var result = await _uow.PatientRepository.GetAllAsync();
+            return result.Select(data => new PatientDTO
             {
                 InternalID = data.InternalID,
                 PatientID = data.PatientID,
@@ -26,18 +27,18 @@ namespace HM.Api.Services
                 EmailAddress = data.EmailAddress,
                 Address = data.Address,
                 Type = data.Type,
-                TypeDescription = Common.Utility.ConvertTypeToString(data.Type),
+                TypeDescription = Utility.ConvertTypeToString(data.Type),
                 Status = data.Status,
-                StatusDescription = Common.Utility.ConvertStatusToString(data.Type),
+                StatusDescription = Utility.ConvertStatusToString(data.Type),
                 CreatedDate = data.CreatedDate,
                 ModifiedDate = data.ModifiedDate
-            }).ToListAsync();
+            }).ToList();
         }
 
         public async Task SavePatientAsync(PatientDTO data)
         {
-            await _db.Patients.AddAsync(Common.Utility.ParseDTO(data));
-            await _db.SaveChangesAsync();
+            await _uow.PatientRepository.AddAsync(Utility.ParseDTO(data));
+            await _uow.SaveAsync();
         } 
     }
 }

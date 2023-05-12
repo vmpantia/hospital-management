@@ -1,8 +1,6 @@
-﻿using HM.Api.Contractors;
-using HM.Api.Models.DTO;
+﻿using HM.BAL.Contractors;
+using HM.BAL.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HM.Api.Controllers
 {
@@ -28,7 +26,7 @@ namespace HM.Api.Controllers
         }
 
         [HttpPost("SavePatient")]
-        public async Task<IActionResult> SavePatientAsync([FromBody]PatientDTO data)
+        public async Task<IActionResult> SavePatientAsync(PatientDTO data)
         {
             try
             {
