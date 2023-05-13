@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
-import { v4 as uuidv4 } from 'uuid';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
+import { format } from "date-fns";
+import { NIL as NIL_UUID  } from 'uuid';
 import axios from "axios";
 
 //Models
@@ -18,7 +20,6 @@ import IconButton from "../components/Buttons/IconButton";
 import InputField from "../components/Inputs/InputField";
 import Constants from "../models/Constants";
 import Loader from "../components/Loader";
-import { json } from "stream/consumers";
 
 const Patient = () => {
     const [patientList, setPatientList] = useState([] as PatientDTO[]);
@@ -61,7 +62,7 @@ const Patient = () => {
         
         let isAdd = patient.internalID === undefined;
         const data:PatientDTO = {
-            internalID: isAdd ? uuidv4() : patient.internalID,
+            internalID: isAdd ? NIL_UUID : patient.internalID,
             patientID: "1",
             firstName: patient.firstName,
             middleName: patient.middleName,
@@ -92,6 +93,7 @@ const Patient = () => {
                         if(response.status !== 200)
                             throw new Error(response.statusText)
                         
+                        toast.success(response.data);
                         fetchData();
                     })
                     .catch(err => {
@@ -114,6 +116,7 @@ const Patient = () => {
 
     return (
         <>
+            <ToastContainer theme="colored" />
             <Title value="Patient" 
                 description="In this page you can see all the patients stored in the system." />
 

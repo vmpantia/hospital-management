@@ -31,7 +31,7 @@ namespace HM.Api.Controllers
             try
             {
                 await _patient.SavePatientAsync(data);
-                return Ok();
+                return Ok("Patient has been saved successfully!");
             }
             catch(Exception ex)
             {

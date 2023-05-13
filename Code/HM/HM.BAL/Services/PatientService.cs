@@ -37,7 +37,21 @@ namespace HM.BAL.Services
 
         public async Task SavePatientAsync(PatientDTO data)
         {
-            await _uow.PatientRepository.AddAsync(Utility.ParseDTO(data));
+            var isAdd = data.InternalID == Guid.Empty;
+
+            if(isAdd) 
+                await _uow.PatientRepository.AddAsync(Utility.ParseDTO(data));
+            else
+            {
+                await _uow.PatientRepository.UpdateAsync(data.InternalID, new
+                {
+                    data.FirstName, data.MiddleName, data.LastName, data.Gender,
+                    data.CivilStatus, data.Birthdate, data.ContactNo, data.EmailAddress,
+                    data.Address, data.Type, data.Status, 
+                    ModifiedDate = data.ModifiedDate
+                });
+            }
+
             await _uow.SaveAsync();
         } 
     }
