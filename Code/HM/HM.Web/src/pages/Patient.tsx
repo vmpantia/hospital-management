@@ -35,15 +35,13 @@ const Patient = () => {
     }, [])
 
     const fetchData = async () => {
-        await axios.get('https://localhost:7254/api/Patient/GetPatients')
+        await axios.get(Constants.API + 'GetPatients')
                     .then(response => {
-                        if(response.status !== 200)
-                            throw new Error(response.statusText)
-
-                        setPatientList(response.data);
+                        if(response.status === 200)
+                            setPatientList(response.data);
                     })
                     .catch(err => {
-                        console.log(err.message);
+                        toast.error(err.message);
                     });
     }
 
@@ -80,24 +78,23 @@ const Patient = () => {
             createdDate: isAdd ? format(new Date(), "yyyy-MM-dd") : patient.createdDate,
             modifiedDate: format(new Date(), "yyyy-MM-dd")
         }
-        await axios.post("https://localhost:7254/api/Patient/SavePatient", 
-                            data,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json',
-                                }
+        await axios.post(Constants.API + "SavePatient", 
+                        data,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
                             }
+                        }
                     )
                     .then(response => {
-                        if(response.status !== 200)
-                            throw new Error(response.statusText)
-                        
-                        toast.success(response.data);
-                        fetchData();
+                        if(response.status === 200) {
+                            toast.success(response.data);
+                            fetchData();
+                        }
                     })
                     .catch(err => {
-                        console.log(err.message);
+                        toast.error(err.message);
                     });
 
         setModalShow(false);
